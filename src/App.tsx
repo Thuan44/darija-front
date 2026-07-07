@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, lazy } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import franceFlag from "./assets/france.png";
 import moroccoStar from "./assets/star.png";
 import heroImg from "./assets/hero.png";
 import "./styles/App.css";
+const ThemeDetailPage = lazy(() => import("./pages/ThemeDetailPage"));
 
 function App() {
   const [showThemes, setShowThemes] = useState(false);
@@ -13,6 +15,10 @@ function App() {
 
   return (
     <>
+      <Routes>
+        <Route path="/themes/:themeSlug" element={<ThemeDetailPage />} />
+      </Routes>
+
       <section id="center" className={showThemes ? "half-grow" : ""}>
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -39,7 +45,7 @@ function App() {
             <p>Nous vous proposerons une liste de mots à apprendre</p>
             <ul>
               <li>
-                <a href="https://github.com/vitejs/vite" target="_blank">
+                <Link to="/themes/home">
                   <svg
                     className="button-icon"
                     role="presentation"
@@ -47,8 +53,8 @@ function App() {
                   >
                     <use href="/icons.svg#github-icon"></use>
                   </svg>
-                  GitHub
-                </a>
+                  Maison
+                </Link>
               </li>
               <li>
                 <a href="https://chat.vite.dev/" target="_blank">
