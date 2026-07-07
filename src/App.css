@@ -1,4 +1,4 @@
-.counter {
+.btn {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -21,8 +21,8 @@
   position: relative;
 
   .base,
-  .framework,
-  .vite {
+  .france,
+  .morocco {
     inset-inline: 0;
     margin: 0 auto;
   }
@@ -33,23 +33,23 @@
     z-index: 0;
   }
 
-  .framework,
-  .vite {
+  .france,
+  .morocco {
     position: absolute;
   }
 
-  .framework {
+  .france {
     z-index: 1;
     top: 34px;
-    height: 28px;
+    height: 20px;
     transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
       scale(1.4);
   }
 
-  .vite {
+  .morocco {
     z-index: 0;
-    top: 107px;
-    height: 26px;
+    top: 98px;
+    height: 50px;
     width: auto;
     transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
       scale(0.8);
