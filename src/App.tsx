@@ -44,15 +44,11 @@ function App() {
             <h2>Choisissez un thème</h2>
             <p>Nous vous proposerons une liste de mots à apprendre</p>
             <ul>
-              <li>
-                <ThemeSelector theme={THEMES.HOUSE.label} />
-              </li>
-              <li>
-                <ThemeSelector theme={THEMES.FOOD.label} />
-              </li>
-              <li>
-                <ThemeSelector theme={THEMES.TRIP.label} />
-              </li>
+              {Object.values(THEMES).map((theme) => (
+                <li>
+                  <ThemeSelector key={theme.id} theme={theme} />
+                </li>
+              ))}
             </ul>
             {/* <WordSelector word="Maison" /> */}
           </div>
