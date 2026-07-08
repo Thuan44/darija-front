@@ -1,4 +1,4 @@
-.btn {
+.btn-accent {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -93,6 +93,18 @@
     height: 22px;
   }
 
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 32px auto;
+    max-width: 600px;
+  }
+
+  .generate-button {
+    margin: 32px auto 0;
+  }
+
   @media (max-width: 1024px) {
     flex-direction: column;
   }
@@ -143,7 +155,7 @@
     flex-wrap: wrap;
     gap: 20px;
     max-width: 600px;
-    margin: 32px auto 0;
+    margin: 16px auto 0;
 
     .word-selector {
       display: flex;
@@ -182,10 +194,6 @@
     margin-top: 20px;
     flex-wrap: wrap;
     justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
 
     a {
       width: 100%;

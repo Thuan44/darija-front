@@ -2,16 +2,18 @@ import type { Word } from "../constants.ts";
 
 type WordSelectorProps = {
   word: Word;
+  checked: boolean;
   onSelect: (word: Word) => void;
 };
 
-function WordSelector({ word, onSelect }: WordSelectorProps) {
+function WordSelector({ word, checked, onSelect }: WordSelectorProps) {
   return (
     <div className="word-selector">
       <input
         type="checkbox"
         id={word.id}
         name={word.darija}
+        checked={checked}
         onChange={() => onSelect(word)}
       />
       <label htmlFor={word.id} className="word-selector-label">

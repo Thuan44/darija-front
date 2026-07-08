@@ -15,12 +15,24 @@ function App() {
 
   const handleThemeSelect = (theme: Theme) => {
     setSelectedTheme(theme);
+    setSelectedWords([]);
     setStep(2);
   };
 
   const handleWordSelect = (word: Word) => {
-    setSelectedWords((prev) => (prev ? [...prev, word] : [word]));
-  }
+    setSelectedWords((prev) => {
+      const current = prev ?? [];
+      const isSelected = current.some((w) => w.id === word.id);
+      return isSelected
+        ? current.filter((w) => w.id !== word.id)
+        : [...current, word];
+    });
+  };
+
+  const selectAllWords = () => {
+    if (!selectedTheme) return;
+    setSelectedWords(LEXICON[selectedTheme.id]);
+  };
 
   const STEP_CONTENT = {
     1: {
@@ -59,7 +71,11 @@ function App() {
           {step == 0 && <p>Améliorez votre lecture et votre prononciation !</p>}
         </div>
         {step == 0 && (
-          <button type="button" className="btn" onClick={() => setStep(1)}>
+          <button
+            type="button"
+            className="btn btn-accent"
+            onClick={() => setStep(1)}
+          >
             Commencer
           </button>
         )}
@@ -80,20 +96,38 @@ function App() {
               </ul>
             )}
             {step === 2 && selectedTheme && (
-              <ul className="words">
-                {LEXICON[selectedTheme.id].map((word: Word) => (
-                  <li key={word.id}>
-                    <WordSelector
-                      key={word.id}
-                      word={word}
-                      onSelect={handleWordSelect}
-                    />
-                  </li>
-                ))}
-                {selectedWords?.map((word) => {
-                  <span>{word.label}</span>
-                })}
-              </ul>
+              <div>
+                <div className="action-buttons">
+                  <button className="btn" onClick={() => setStep(step - 1)}>
+                    Changer de thème
+                  </button>
+                  <button className="btn" onClick={selectAllWords}>
+                    Tout sélectionner
+                  </button>
+                </div>
+                <ul className="words">
+                  {LEXICON[selectedTheme.id].map((word: Word) => (
+                    <li key={word.id}>
+                      <WordSelector
+                        key={word.id}
+                        word={word}
+                        onSelect={handleWordSelect}
+                        checked={
+                          selectedWords?.some((w) => w.id === word.id) ?? false
+                        }
+                      />
+                    </li>
+                  ))}
+                  {selectedWords?.map((word) => {
+                    <span>{word.label}</span>;
+                  })}
+                </ul>
+                {selectedWords.length > 0 && (
+                  <button className="btn btn-accent generate-button">
+                    Générer un texte
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </section>
