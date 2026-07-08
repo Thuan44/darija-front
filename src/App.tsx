@@ -9,6 +9,12 @@ import { THEMES, LEXICON } from "./constants/lexicon.ts";
 
 function App() {
   const [step, setStep] = useState(0);
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+
+  const handleThemeSelect = (theme: Theme) => {
+    setSelectedTheme(theme);
+    setStep(2);
+  };
 
   return (
     <>
@@ -38,7 +44,7 @@ function App() {
         )}
       </section>
 
-      {step == 1 && (
+      {step > 0 && (
         <section id="themes">
           <div id="social">
             <h2>Choisissez un thème</h2>
@@ -46,7 +52,11 @@ function App() {
             <ul>
               {Object.values(THEMES).map((theme) => (
                 <li>
-                  <ThemeSelector key={theme.id} theme={theme} />
+                  <ThemeSelector
+                    key={theme.id}
+                    theme={theme}
+                    onSelect={handleThemeSelect}
+                  />
                 </li>
               ))}
             </ul>
