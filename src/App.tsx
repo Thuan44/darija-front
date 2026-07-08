@@ -1,10 +1,8 @@
-import { useState, lazy } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
 import franceFlag from "./assets/france.png";
 import moroccoStar from "./assets/star.png";
 import heroImg from "./assets/hero.png";
 import "./styles/App.css";
-const ThemeDetailPage = lazy(() => import("./pages/ThemeDetailPage"));
 
 function App() {
   const [showThemes, setShowThemes] = useState(false);
@@ -15,10 +13,6 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/themes/:themeSlug" element={<ThemeDetailPage />} />
-      </Routes>
-
       <section id="center" className={showThemes ? "half-grow" : ""}>
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
