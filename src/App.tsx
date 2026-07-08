@@ -3,7 +3,9 @@ import franceFlag from "./assets/france.png";
 import moroccoStar from "./assets/star.png";
 import heroImg from "./assets/hero.png";
 import "./styles/App.css";
-import ThemeSelector from "./features/selection/components/ThemeSelector"
+import ThemeSelector from "./features/selection/components/ThemeSelector";
+import WordSelector from "./features/selection/components/WordSelector";
+import { THEMES, LEXICON } from "./constants/lexicon.ts";
 
 function App() {
   const [step, setStep] = useState(0);
@@ -43,15 +45,16 @@ function App() {
             <p>Nous vous proposerons une liste de mots à apprendre</p>
             <ul>
               <li>
-                <ThemeSelector theme="Maison" />
+                <ThemeSelector theme={THEMES.HOUSE.label} />
               </li>
               <li>
-                <ThemeSelector theme="École" />
+                <ThemeSelector theme={THEMES.FOOD.label} />
               </li>
               <li>
-                <ThemeSelector theme="Marché" />
+                <ThemeSelector theme={THEMES.TRIP.label} />
               </li>
             </ul>
+            {/* <WordSelector word="Maison" /> */}
           </div>
         </section>
       )}
