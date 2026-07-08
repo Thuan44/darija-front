@@ -16,6 +16,21 @@ function App() {
     setStep(2);
   };
 
+  const STEP_CONTENT = {
+    1: {
+      title: "Choisissez un thème",
+      description: "Nous vous proposerons une liste de mots à apprendre",
+    },
+    2: {
+      title: "Choisissez vos mots",
+      description: selectedTheme
+        ? `Thème « ${selectedTheme.label} » - sélectionnez les mots à apprendre`
+        : "Sélectionnez les mots à apprendre",
+    },
+  } as const;
+
+  const content = STEP_CONTENT[step as 1 | 2];
+
   return (
     <>
       <section id="center" className={step !== 0 ? "half-grow" : ""}>
@@ -47,8 +62,8 @@ function App() {
       {step > 0 && (
         <section id="themes">
           <div id="social">
-            <h2>Choisissez un thème</h2>
-            <p>Nous vous proposerons une liste de mots à apprendre</p>
+            <h2>{content.title}</h2>
+            <p>{content.description}</p>
             <ul>
               {Object.values(THEMES).map((theme) => (
                 <li>
