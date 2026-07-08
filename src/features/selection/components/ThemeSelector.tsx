@@ -5,7 +5,7 @@ type ThemeSelectorProps = {
   onSelect: (theme: Theme) => void 
 };
 
-function ThemeSelector({ theme }: ThemeSelectorProps) {
+function ThemeSelector({ theme, onSelect }: ThemeSelectorProps) {
   return (
     <button type="button" onClick={() => onSelect(theme)}>
       {theme.label}

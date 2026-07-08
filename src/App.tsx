@@ -6,10 +6,12 @@ import "./styles/App.css";
 import ThemeSelector from "./features/selection/components/ThemeSelector";
 import WordSelector from "./features/selection/components/WordSelector";
 import { THEMES, LEXICON } from "./constants/lexicon.ts";
+import type { Word } from "../constants.ts";
 
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [selectedWords, setSelectedWords] = useState<Word[] | []>();
 
   const handleThemeSelect = (theme: Theme) => {
     setSelectedTheme(theme);
@@ -64,18 +66,24 @@ function App() {
           <div id="social">
             <h2>{content.title}</h2>
             <p>{content.description}</p>
-            <ul>
-              {Object.values(THEMES).map((theme) => (
-                <li>
-                  <ThemeSelector
-                    key={theme.id}
-                    theme={theme}
-                    onSelect={handleThemeSelect}
-                  />
-                </li>
-              ))}
-            </ul>
-            {/* <WordSelector word="Maison" /> */}
+            {step === 1 && (
+              <ul>
+                {Object.values(THEMES).map((theme: THEME) => (
+                  <li key={theme.id}>
+                    <ThemeSelector theme={theme} onSelect={handleThemeSelect} />
+                  </li>
+                ))}
+              </ul>
+            )}
+            {step === 2 && selectedTheme && (
+              <ul className="words">
+                {LEXICON[selectedTheme.id].map((word: Word) => (
+                  <li key={word.id}>
+                    <WordSelector key={word.id} word={word} />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
       )}
