@@ -123,7 +123,7 @@
     cursor: pointer;
     color: var(--text-h);
     font-size: 16px;
-    border: none; 
+    border: none;
     border-radius: 6px;
     background: var(--social-bg);
     display: flex;
@@ -135,6 +135,46 @@
 
     &:hover {
       box-shadow: var(--shadow);
+    }
+  }
+
+  &.words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 600px;
+    margin: 32px auto 0;
+
+    .word-selector {
+      display: flex;
+      padding: 5px;
+      gap: 6px;
+      border-radius: 6px;
+      background: var(--social-bg);
+      cursor: pointer;
+
+      .word-selector-label {
+        display: flex;
+        gap: 2px;
+        flex-direction: column;
+        text-align: left;
+        cursor: pointer;
+
+        span {
+          color: var(--text-h);
+          font-size: 16px;
+        }
+
+        span,
+        small {
+          line-height: 1;
+        }
+
+        small {
+          font-size: 12px;
+          color: #808088;
+        }
+      }
     }
   }
 

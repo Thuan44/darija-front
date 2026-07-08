@@ -18,6 +18,10 @@ function App() {
     setStep(2);
   };
 
+  const handleWordSelect = (word: Word) => {
+    setSelectedWords((prev) => (prev ? [...prev, word] : [word]));
+  }
+
   const STEP_CONTENT = {
     1: {
       title: "Choisissez un thème",
@@ -63,7 +67,7 @@ function App() {
 
       {step > 0 && (
         <section id="themes">
-          <div id="social">
+          <div>
             <h2>{content.title}</h2>
             <p>{content.description}</p>
             {step === 1 && (
@@ -79,9 +83,16 @@ function App() {
               <ul className="words">
                 {LEXICON[selectedTheme.id].map((word: Word) => (
                   <li key={word.id}>
-                    <WordSelector key={word.id} word={word} />
+                    <WordSelector
+                      key={word.id}
+                      word={word}
+                      onSelect={handleWordSelect}
+                    />
                   </li>
                 ))}
+                {selectedWords?.map((word) => {
+                  <span>{word.label}</span>
+                })}
               </ul>
             )}
           </div>
