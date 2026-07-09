@@ -45,9 +45,13 @@ function App() {
         ? `Thème « ${selectedTheme.label} » - sélectionnez les mots à apprendre`
         : "Sélectionnez les mots à apprendre",
     },
+    3: {
+      title: "Votre texte d'entraînement",
+      description: "Voici un texte généré à partir de vos mots",
+    },
   } as const;
 
-  const content = STEP_CONTENT[step as 1 | 2];
+  const content = STEP_CONTENT[step as 1 | 2 | 3];
 
   return (
     <>
