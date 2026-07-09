@@ -6,8 +6,8 @@ import "./styles/App.css";
 import ThemeSelector from "./features/selection/components/ThemeSelector";
 import WordSelector from "./features/selection/components/WordSelector";
 import { THEMES, LEXICON } from "./constants/lexicon.ts";
-import type { Word } from "../constants.ts";
-import { useTextGeneration } from "@/features/generation/hooks/useTextGeneration";
+import { useTextGeneration } from "./features/generation/hooks/useTextGeneration";
+import type { Theme, Word } from "./constants/lexicon.ts";
 
 function App() {
   const [step, setStep] = useState(0);
