@@ -7,11 +7,14 @@ import ThemeSelector from "./features/selection/components/ThemeSelector";
 import WordSelector from "./features/selection/components/WordSelector";
 import { THEMES, LEXICON } from "./constants/lexicon.ts";
 import type { Word } from "../constants.ts";
+import { useTextGeneration } from "@/features/generation/hooks/useTextGeneration";
 
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedWords, setSelectedWords] = useState<Word[] | []>();
+
+  const { generate, text, isLoading, error, reset } = useTextGeneration();
 
   const handleThemeSelect = (theme: Theme) => {
     setSelectedTheme(theme);
@@ -127,8 +130,18 @@ function App() {
                   })}
                 </ul>
                 {selectedWords.length > 0 && (
-                  <button className="btn btn-accent generate-button">
-                    Générer un texte
+                  <button
+                    className="btn btn-accent generate-button"
+                    onClick={() => {
+                      generate({
+                        themeId: selectedTheme.id,
+                        themeLabel: selectedTheme.label,
+                        words: selectedWords,
+                      }).then(() => setStep(3));
+                    }}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Génération..." : "Générer un texte"}
                   </button>
                 )}
               </div>
