@@ -5,7 +5,8 @@ function getApiBaseUrl(): string {
     throw new Error("VITE_API_URL is not defined.");
   }
 
-  return url.startsWith("http") ? url : `http://${url}`;
+  const base = url.startsWith("http") ? url : `http://${url}`;
+  return `${base.replace(/\/$/, "")}/api`;
 }
 
 export const apiConfig = {

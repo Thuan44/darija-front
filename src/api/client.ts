@@ -29,13 +29,12 @@ async function request<T>(
     } catch {
       errorBody = await response.text();
     }
+    throw new ApiError(
+      `Api error ${response.status}`,
+      response.status,
+      errorBody,
+    );
   }
-
-  throw new ApiError(
-    `Api error ${response.status}`,
-    response.status,
-    errorBody,
-  );
 
   if (response.status === 204) {
     return undefined as T;
