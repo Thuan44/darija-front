@@ -125,9 +125,6 @@ function App() {
                       />
                     </li>
                   ))}
-                  {selectedWords?.map((word) => (
-                    <span>{word.darija}</span>
-                  ))}
                 </ul>
                 {selectedWords.length > 0 && (
                   <button
