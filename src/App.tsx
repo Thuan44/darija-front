@@ -12,9 +12,9 @@ import type { Theme, Word } from "./constants/lexicon.ts";
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
-  const [selectedWords, setSelectedWords] = useState<Word[] | []>();
+  const [selectedWords, setSelectedWords] = useState<Word[]>();
 
-  const { generate, text, isLoading, error, reset } = useTextGeneration();
+  const { generate, text, isLoading } = useTextGeneration();
 
   const handleThemeSelect = (theme: Theme) => {
     setSelectedTheme(theme);
@@ -95,7 +95,7 @@ function App() {
             <p>{content.description}</p>
             {step === 1 && (
               <ul>
-                {Object.values(THEMES).map((theme: THEME) => (
+                {Object.values(THEMES).map((theme: Theme) => (
                   <li key={theme.id}>
                     <ThemeSelector theme={theme} onSelect={handleThemeSelect} />
                   </li>
@@ -125,9 +125,9 @@ function App() {
                       />
                     </li>
                   ))}
-                  {selectedWords?.map((word) => {
-                    <span>{word.label}</span>;
-                  })}
+                  {selectedWords?.map((word) => (
+                    <span>{word.darija}</span>
+                  ))}
                 </ul>
                 {selectedWords.length > 0 && (
                   <button
@@ -146,6 +146,7 @@ function App() {
                 )}
               </div>
             )}
+            {step === 3 && text && <div className="generated-text">{text}</div>}
           </div>
         </section>
       )}

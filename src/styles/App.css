@@ -105,6 +105,10 @@
     margin: 32px auto 0;
   }
 
+  .generated-text {
+    margin: 32px auto 0;
+  }
+
   @media (max-width: 1024px) {
     flex-direction: column;
   }

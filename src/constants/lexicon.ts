@@ -49,7 +49,7 @@ export const LEXICON = {
     { id: "khodra", darija: "khodra", translation: "Légumes" },
     { id: "hlou", darija: "hlou", translation: "Sucré" },
     { id: "hmid", darija: "hmid", translation: "Acide / Citron" },
-    { id: "beit", darija: "beit", translation: "Œuf" },
+    { id: "beid", darija: "beid", translation: "Œuf" },
     { id: "bsla", darija: "bsla", translation: "Oignon" },
     { id: "zit", darija: "zit", translation: "Huile" },
   ],
