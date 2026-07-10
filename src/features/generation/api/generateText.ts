@@ -8,5 +8,9 @@ export function generateText(
   payload: GenerateTextRequest,
   signal?: AbortSignal,
 ): Promise<GenerateTextResponse> {
-  return apiClient.post("/generate-text", payload, { signal });
+  return apiClient.post("/generate-text", {
+    theme_id: payload.themeId,
+    theme_label: payload.themeLabel,
+    words: payload.words
+  }, { signal });
 }
