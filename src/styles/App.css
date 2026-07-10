@@ -105,8 +105,16 @@
     margin: 32px auto 0;
   }
 
+  .generated-text-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px auto 0;
+  }
+
   .generated-text {
     margin: 32px auto 0;
+    max-width: 600px;
   }
 
   @media (max-width: 1024px) {

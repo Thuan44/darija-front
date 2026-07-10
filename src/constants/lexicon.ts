@@ -37,7 +37,7 @@ export const LEXICON = {
     { id: "salla", darija: "ṣalla", translation: "Salon" },
     { id: "hammam", darija: "ḥammam", translation: "Salle de bain" },
     { id: "lma", darija: "lma", translation: "Eau" },
-    { id: "miftah", darija: "miftāḥ", translation: "Clé" },
+    { id: "sarout", darija: "sārot", translation: "Clé" },
     { id: "kas", darija: "kas", translation: "Verre" },
     { id: "kursi", darija: "kursi", translation: "Chaise" },
     { id: "tawla", darija: "ṭawla", translation: "Table" },

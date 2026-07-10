@@ -8,6 +8,8 @@ import WordSelector from "./features/selection/components/WordSelector";
 import { THEMES, LEXICON } from "./constants/lexicon.ts";
 import { useTextGeneration } from "./features/generation/hooks/useTextGeneration";
 import type { Theme, Word } from "./constants/lexicon.ts";
+import { GeneratedText } from "./features/generation/components/GeneratedText.tsx";
+import { Reader } from "./features/reader/components/Reader.tsx";
 
 function App() {
   const [step, setStep] = useState(0);
@@ -143,7 +145,8 @@ function App() {
                 )}
               </div>
             )}
-            {step === 3 && text && <div className="generated-text">{text}</div>}
+            {step === 3 && text && <GeneratedText />}
+            {step === 4 && text && <Reader />}
           </div>
         </section>
       )}

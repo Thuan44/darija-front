@@ -100,7 +100,9 @@ code,
   font-family: var(--mono);
   display: inline-flex;
   border-radius: 4px;
+  border: 1px solid black;
   color: var(--text-h);
+  cursor: pointer;
 }
 
 code {
