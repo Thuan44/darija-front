@@ -1,14 +1,28 @@
 import { Mic, Square } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function AudioRecorder() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
+  // Cleanup micro au démontage
+  useEffect(() => {
+    return () => {
+      mediaRecorderRef.current?.stream
+        ?.getTracks()
+        .forEach((track) => track.stop());
+    };
+  }, []);
+  // Cleanup URL blob
+  useEffect(() => {
+    if (!audioUrl) return;
+    return () => URL.revokeObjectURL(audioUrl);
+  }, [audioUrl]);
+  
   const startRecording = async () => {
     audioChunksRef.current = [];
     setAudioUrl(null);
@@ -48,7 +62,7 @@ export function AudioRecorder() {
       mediaRecorder.start();
       setIsRecording(true);
     } catch (e) {
-      setError(true)
+      setError(true);
       console.error("Erreur lors de l'accès au microphone :", e);
       alert("Impossible d'accéder au microphone.");
     }
@@ -64,11 +78,15 @@ export function AudioRecorder() {
   return (
     <div className="generated-text-actions-wrapper">
       {error && (
-        <div className="error-message" style={{ color: "red", marginBottom: "1rem" }}>
-          Une erreur est survenue lors de l'accès au microphone. Veuillez vérifier les permissions de votre navigateur.
+        <div
+          className="error-message"
+          style={{ color: "red", marginBottom: "1rem" }}
+        >
+          Une erreur est survenue lors de l'accès au microphone. Veuillez
+          vérifier les permissions de votre navigateur.
         </div>
       )}
- 
+
       <div className="generated-text-actions">
         {/* {!isRecording && (
           <button type="button" className="btn">
@@ -78,12 +96,15 @@ export function AudioRecorder() {
         <button
           type="button"
           className="btn"
-          aria-label={isRecording ? "Arrêter l'enregistrement audio" : "Commencer l'enregistrement audio"}
+          aria-label={
+            isRecording
+              ? "Arrêter l'enregistrement audio"
+              : "Commencer l'enregistrement audio"
+          }
           onClick={isRecording ? stopRecording : startRecording}
         >
           {isRecording ? <Square /> : <Mic />}
         </button>
-   
       </div>
       <audio src={audioUrl} controls />
     </div>
