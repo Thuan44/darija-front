@@ -47,7 +47,7 @@ export const LEXICON = {
     { id: "zerbiya", darija: "zerbiya", translation: "Tapis" },
     { id: "bri", darija: "bri", translation: "Couverture" },
     { id: "lampa", darija: "lampa", translation: "Lampe" },
-    { id: "sbbuta", darija: "sbūṭa", translation: "Placard" },
+    { id: "mario", darija: "mārio", translation: "Placard" },
     { id: "madraba", darija: "madraba", translation: "Armoire" },
     { id: "barrad", darija: "barrad", translation: "Théière" },
   ],

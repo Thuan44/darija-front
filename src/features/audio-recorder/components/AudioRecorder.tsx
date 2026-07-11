@@ -60,19 +60,22 @@ export function AudioRecorder() {
   };
 
   return (
-    <div className="generated-text-actions">
-      {!isRecording && (
-        <button type="button" className="btn">
-          <Volume2 />
+    <div className="generated-text-actions-wrapper">
+      <div className="generated-text-actions">
+        {!isRecording && (
+          <button type="button" className="btn">
+            <Volume2 />
+          </button>
+        )}
+        <button
+          type="button"
+          className="btn"
+          onClick={isRecording ? stopRecording : startRecording}
+        >
+          {isRecording ? <Square /> : <Mic />}
         </button>
-      )}
-      <button
-        type="button"
-        className="btn"
-        onClick={isRecording ? stopRecording : startRecording}
-      >
-        {isRecording ? <Square /> : <Mic />}
-      </button>
+      </div>
+      <audio src={audioUrl} controls />
     </div>
   );
 }

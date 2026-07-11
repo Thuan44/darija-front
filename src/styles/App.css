@@ -105,6 +105,14 @@
     margin: 32px auto 0;
   }
 
+  .generated-text-actions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .generated-text-actions {
     display: flex;
     justify-content: center;
