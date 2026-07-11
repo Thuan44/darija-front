@@ -1,12 +1,13 @@
-import { Volume2, Mic, Square } from "lucide-react";
+import { Mic, Square } from "lucide-react";
 import { useRef, useState } from "react";
 
 export function AudioRecorder() {
   const [isRecording, setIsRecording] = useState(false);
-  const [audioUrl, setAudioUrl] = useState(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [error, setError] = useState(false)
 
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
 
   const startRecording = async () => {
     audioChunksRef.current = [];
@@ -47,6 +48,7 @@ export function AudioRecorder() {
       mediaRecorder.start();
       setIsRecording(true);
     } catch (e) {
+      setError(true)
       console.error("Erreur lors de l'accès au microphone :", e);
       alert("Impossible d'accéder au microphone.");
     }
@@ -61,19 +63,27 @@ export function AudioRecorder() {
 
   return (
     <div className="generated-text-actions-wrapper">
+      {error && (
+        <div className="error-message" style={{ color: "red", marginBottom: "1rem" }}>
+          Une erreur est survenue lors de l'accès au microphone. Veuillez vérifier les permissions de votre navigateur.
+        </div>
+      )}
+ 
       <div className="generated-text-actions">
-        {!isRecording && (
+        {/* {!isRecording && (
           <button type="button" className="btn">
             <Volume2 />
           </button>
-        )}
+        )} */}
         <button
           type="button"
           className="btn"
+          aria-label={isRecording ? "Arrêter l'enregistrement audio" : "Commencer l'enregistrement audio"}
           onClick={isRecording ? stopRecording : startRecording}
         >
           {isRecording ? <Square /> : <Mic />}
         </button>
+   
       </div>
       <audio src={audioUrl} controls />
     </div>

@@ -14,9 +14,9 @@ import { AudioRecorder } from "./features/audio-recorder/components/AudioRecorde
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
-  const [selectedWords, setSelectedWords] = useState<Word[]>();
+  const [selectedWords, setSelectedWords] = useState<Word[]>([]);
 
-  const { generate, text, isLoading } = useTextGeneration();
+  const { generate, text, isLoading, error } = useTextGeneration();
 
   const handleThemeSelect = (theme: Theme) => {
     setSelectedTheme(theme);
@@ -37,6 +37,19 @@ function App() {
   const selectAllWords = () => {
     if (!selectedTheme) return;
     setSelectedWords(LEXICON[selectedTheme.id]);
+  };
+
+  const handleTextGeneration = async () => {
+    if (!selectedTheme || selectedWords.length === 0) setStep(3);
+
+    const success = await generate({
+      themeId: selectedTheme.id,
+      themeLabel: selectedTheme.label,
+      words: selectedWords,
+    });
+    if (success) {
+      setStep(3);
+    }
   };
 
   const STEP_CONTENT = {
@@ -61,7 +74,7 @@ function App() {
   return (
     <>
       <section id="center" className={step !== 0 ? "half-grow" : ""}>
-        {step == 0 && (
+        {step === 0 && (
           <div className="hero">
             <img
               src={heroImg}
@@ -77,9 +90,9 @@ function App() {
 
         <div>
           <h1>Coach Darija IA</h1>
-          {step == 0 && <p>Améliorez votre lecture et votre prononciation !</p>}
+          {step === 0 && <p>Améliorez votre lecture et votre prononciation !</p>}
         </div>
-        {step == 0 && (
+        {step === 0 && (
           <button
             type="button"
             className="btn btn-accent"
@@ -118,7 +131,7 @@ function App() {
                   {LEXICON[selectedTheme.id].map((word: Word) => (
                     <li key={word.id}>
                       <WordSelector
-                        key={word.id}
+                        key={`word-selector-${word.id}`}
                         word={word}
                         onSelect={handleWordSelect}
                         checked={
@@ -128,21 +141,21 @@ function App() {
                     </li>
                   ))}
                 </ul>
+                {error && (
+                  <div className="error-message" style={{ color: "red", marginBottom: "1rem" }}>
+                    {error}
+                  </div>
+                )}
                 {selectedWords.length > 0 && (
                   <button
                     className="btn btn-accent generate-button"
-                    onClick={() => {
-                      generate({
-                        themeId: selectedTheme.id,
-                        themeLabel: selectedTheme.label,
-                        words: selectedWords,
-                      }).then(() => setStep(3));
-                    }}
+                    onClick={() => handleTextGeneration()}
                     disabled={isLoading}
                   >
                     {isLoading ? "Génération..." : "Générer un texte"}
                   </button>
                 )}
+           
               </div>
             )}
             {step === 3 && text && (

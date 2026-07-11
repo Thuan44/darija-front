@@ -14,8 +14,10 @@ export function useTextGeneration() {
     try {
       const { text } = await generateText(payload);
       setText(text);
+      return true
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erreur inconnue");
+      return false
     } finally {
       setIsLoading(false);
     }

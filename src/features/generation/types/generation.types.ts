@@ -1,4 +1,4 @@
-import type { Word } from "../../../constants/lexicon.ts";
+import type { Word } from "@/constants/lexicon.ts";
 
 type GenerateTextRequest = {
   themeId: string;

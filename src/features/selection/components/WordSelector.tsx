@@ -1,4 +1,4 @@
-import type { Word } from "../../../constants/lexicon";
+import type { Word } from "@/constants/lexicon.ts";
 
 type WordSelectorProps = {
   word: Word;
