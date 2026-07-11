@@ -22,7 +22,7 @@ export function AudioRecorder() {
     if (!audioUrl) return;
     return () => URL.revokeObjectURL(audioUrl);
   }, [audioUrl]);
-  
+
   const startRecording = async () => {
     audioChunksRef.current = [];
     setAudioUrl(null);
