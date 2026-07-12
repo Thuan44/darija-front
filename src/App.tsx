@@ -10,14 +10,12 @@ import { useTextGeneration } from "./features/generation/hooks/useTextGeneration
 import type { Theme, Word } from "./constants/lexicon.ts";
 import { GeneratedText } from "./features/generation/components/GeneratedText.tsx";
 import { AudioRecorder } from "./features/audio-recorder/components/AudioRecorder.tsx";
+import { generateFeedback } from "./features/feedback/api/generateFeedback.ts";
 
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
-  const [validatedAudioUrl, setValidatedAudioUrl] = useState<string | null>(
-    null,
-  );
 
   const { generate, text, isLoading, error } = useTextGeneration();
 
@@ -55,11 +53,15 @@ function App() {
     }
   };
 
-  const handleAudioValidated = async (audio: string) => {
-    setValidatedAudioUrl(audio);
+  const handleAudioValidated = async (audioUrl: string) => {
+    const audioBlob = await fetch(audioUrl).then((res) => res.blob());
+
+    const formData = new FormData();
+    formData.append("expected_text", text);
+    formData.append("audio", audioBlob, "recording.webm");
+
+    await generateFeedback(formData);
     setStep(4);
-    // Send text and audio to backend
-    
   };
 
   const STEP_CONTENT = {
@@ -77,9 +79,14 @@ function App() {
       title: "Votre texte d'entraînement",
       description: "Voici un texte généré à partir de vos mots",
     },
+    4: {
+      title: "Les conseils du coach",
+      description:
+        "Voici un retour constructif qui vous permettra de vous améliorer",
+    },
   } as const;
 
-  const content = STEP_CONTENT[step as 1 | 2 | 3];
+  const content = STEP_CONTENT[step as 1 | 2 | 3 | 4];
 
   return (
     <>
