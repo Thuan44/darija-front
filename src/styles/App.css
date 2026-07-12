@@ -125,6 +125,14 @@
     max-width: 600px;
   }
 
+  .audio-controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media (max-width: 1024px) {
     flex-direction: column;
   }

@@ -15,6 +15,9 @@ function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
+  const [validatedAudioUrl, setValidatedAudioUrl] = useState<string | null>(
+    null,
+  );
 
   const { generate, text, isLoading, error } = useTextGeneration();
 
@@ -50,6 +53,13 @@ function App() {
     if (success) {
       setStep(3);
     }
+  };
+
+  const handleAudioValidated = async (audio: string) => {
+    setValidatedAudioUrl(audio);
+    setStep(4);
+    // Send text and audio to backend
+    
   };
 
   const STEP_CONTENT = {
@@ -90,7 +100,9 @@ function App() {
 
         <div>
           <h1>Coach Darija IA</h1>
-          {step === 0 && <p>Améliorez votre lecture et votre prononciation !</p>}
+          {step === 0 && (
+            <p>Améliorez votre lecture et votre prononciation !</p>
+          )}
         </div>
         {step === 0 && (
           <button
@@ -142,7 +154,10 @@ function App() {
                   ))}
                 </ul>
                 {error && (
-                  <div className="error-message" style={{ color: "red", marginBottom: "1rem" }}>
+                  <div
+                    className="error-message"
+                    style={{ color: "red", marginTop: "32px" }}
+                  >
                     {error}
                   </div>
                 )}
@@ -155,13 +170,12 @@ function App() {
                     {isLoading ? "Génération..." : "Générer un texte"}
                   </button>
                 )}
-           
               </div>
             )}
             {step === 3 && text && (
               <>
                 <GeneratedText text={text} />
-                <AudioRecorder />
+                <AudioRecorder onAudioValidated={handleAudioValidated} />
               </>
             )}
           </div>
