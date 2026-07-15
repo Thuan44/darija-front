@@ -152,8 +152,55 @@
     font-family: var(--heading);
     font-size: 48px;
     line-height: 1;
-    color: var(--accent);
     font-weight: 500;
+  }
+
+  .score-low {
+    color: var(--score-low);
+  }
+
+  .score-medium {
+    color: var(--score-medium);
+  }
+
+  .score-good {
+    color: var(--score-good);
+  }
+
+  .score-excellent {
+    color: var(--score-excellent);
+  }
+
+  .score-bar-low {
+    background: var(--score-low);
+  }
+
+  .score-bar-medium {
+    background: var(--score-medium);
+  }
+
+  .score-bar-good {
+    background: var(--score-good);
+  }
+
+  .score-bar-excellent {
+    background: var(--score-excellent);
+  }
+
+  .score-card-low {
+    background: color-mix(in srgb, var(--score-low) 6%, var(--social-bg));
+  }
+
+  .score-card-medium {
+    background: color-mix(in srgb, var(--score-medium) 6%, var(--social-bg));
+  }
+
+  .score-card-good {
+    background: color-mix(in srgb, var(--score-good) 6%, var(--social-bg));
+  }
+
+  .score-card-excellent {
+    background: color-mix(in srgb, var(--score-excellent) 6%, var(--social-bg));
   }
 
   .feedback-metrics {
@@ -195,7 +242,6 @@
   .feedback-progress-bar {
     height: 100%;
     border-radius: 4px;
-    background: var(--accent);
     transition: width 0.4s ease;
   }
 
@@ -239,7 +285,8 @@
   }
 
   .feedback-list-strengths li {
-    border-left: 3px solid var(--accent-border);
+    border-left: 3px solid var(--success);
+    background: var(--success-bg);
   }
 
   .feedback-list-tips li {
@@ -296,6 +343,17 @@
     gap: 16px;
     justify-content: center;
     align-items: center;
+  }
+
+  .audio-playback {
+    margin-top: 32px;
+  }
+
+  .audio-playback-label {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-h);
+    font-weight: 500;
   }
 
   @media (max-width: 1024px) {

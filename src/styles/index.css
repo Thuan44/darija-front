@@ -8,6 +8,12 @@
   --accent-bg: color-mix(in srgb, var(--accent) 10%, transparent);
   --accent-border: color-mix(in srgb, var(--accent) 50%, transparent);
   --social-bg: rgba(244, 243, 236, 0.5);
+  --score-low: #b84a4a;
+  --score-medium: #c4883a;
+  --score-good: #6b9b5a;
+  --score-excellent: #3d8b6e;
+  --success: #4a8f6e;
+  --success-bg: color-mix(in srgb, var(--success) 8%, var(--social-bg));
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 

@@ -3,15 +3,22 @@ import { useEffect, useRef, useState } from "react";
 
 type AudioRecorderProps = {
   onAudioValidated?: (audioUrl: string) => void;
+  playbackOnly?: boolean;
+  playbackUrl?: string | null;
 };
 
-export function AudioRecorder({ onAudioValidated }: AudioRecorderProps) {
+export function AudioRecorder({
+  onAudioValidated,
+  playbackOnly = false,
+  playbackUrl,
+}: AudioRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const urlTransferredRef = useRef(false);
 
   // Cleanup microphone on unmouting
   useEffect(() => {
@@ -21,10 +28,14 @@ export function AudioRecorder({ onAudioValidated }: AudioRecorderProps) {
         .forEach((track) => track.stop());
     };
   }, []);
-  // Cleanup URL blob
+  // Cleanup URL blob (skip if ownership was transferred to parent)
   useEffect(() => {
     if (!audioUrl) return;
-    return () => URL.revokeObjectURL(audioUrl);
+    return () => {
+      if (!urlTransferredRef.current) {
+        URL.revokeObjectURL(audioUrl);
+      }
+    };
   }, [audioUrl]);
 
   const startRecording = async () => {
@@ -80,8 +91,22 @@ export function AudioRecorder({ onAudioValidated }: AudioRecorderProps) {
   };
 
   const handleAudioValidation = () => {
-    if (audioUrl) onAudioValidated?.(audioUrl);
+    if (!audioUrl) return;
+    urlTransferredRef.current = true;
+    onAudioValidated?.(audioUrl);
+    setAudioUrl(null);
   };
+
+  if (playbackOnly && playbackUrl) {
+    return (
+      <div className="generated-text-actions-wrapper audio-playback">
+        <p className="audio-playback-label">Votre enregistrement</p>
+        <div className="audio-controls-wrapper">
+          <audio src={playbackUrl} controls />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="generated-text-actions-wrapper">

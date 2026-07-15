@@ -1,4 +1,5 @@
 import type { FeedbackAnalysis } from "../types/generation.types";
+import { getScoreLevel } from "../utils/scoreLevel";
 
 type FeedbackProps = {
   analysis: FeedbackAnalysis;
@@ -11,14 +12,28 @@ type ScoreMetricProps = {
 };
 
 function ScoreMetric({ label, value }: ScoreMetricProps) {
+  const level = getScoreLevel(value);
+
   return (
     <div className="feedback-metric">
       <div className="feedback-metric-header">
         <span className="feedback-metric-label">{label}</span>
-        <span className="feedback-metric-value">{value}/100</span>
+        <span className={`feedback-metric-value score-${level}`}>
+          {value}/100
+        </span>
       </div>
-      <div className="feedback-progress" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} aria-label={label}>
-        <div className="feedback-progress-bar" style={{ width: `${value}%` }} />
+      <div
+        className="feedback-progress"
+        role="progressbar"
+        aria-valuenow={value}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={label}
+      >
+        <div
+          className={`feedback-progress-bar score-bar-${level}`}
+          style={{ width: `${value}%` }}
+        />
       </div>
     </div>
   );
@@ -35,11 +50,15 @@ export function Feedback({ analysis, transcribedText }: FeedbackProps) {
     conseils,
   } = analysis;
 
+  const globalLevel = getScoreLevel(score_global);
+
   return (
     <div className="feedback">
-      <div className="feedback-score-card">
+      <div className={`feedback-score-card score-card-${globalLevel}`}>
         <p className="feedback-score-label">Score global</p>
-        <p className="feedback-score-value">{score_global}</p>
+        <p className={`feedback-score-value score-${globalLevel}`}>
+          {score_global}
+        </p>
         <div
           className="feedback-progress feedback-progress-global"
           role="progressbar"
@@ -49,7 +68,7 @@ export function Feedback({ analysis, transcribedText }: FeedbackProps) {
           aria-label="Score global"
         >
           <div
-            className="feedback-progress-bar"
+            className={`feedback-progress-bar score-bar-${globalLevel}`}
             style={{ width: `${score_global}%` }}
           />
         </div>

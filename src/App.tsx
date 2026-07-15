@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import franceFlag from "./assets/france.png";
 import moroccoStar from "./assets/star.png";
 import heroImg from "./assets/hero.png";
@@ -23,8 +23,15 @@ function App() {
   );
   const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
   const [feedbackError, setFeedbackError] = useState<string | null>(null);
+  const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
 
   const { generate, text, isLoading, error } = useTextGeneration();
+
+  useEffect(() => {
+    return () => {
+      if (recordedAudioUrl) URL.revokeObjectURL(recordedAudioUrl);
+    };
+  }, [recordedAudioUrl]);
 
   const handleThemeSelect = (theme: Theme) => {
     setSelectedTheme(theme);
@@ -61,6 +68,7 @@ function App() {
   };
 
   const handleAudioValidated = async (audioUrl: string) => {
+    setRecordedAudioUrl(audioUrl);
     const audioBlob = await fetch(audioUrl).then((res) => res.blob());
 
     const formData = new FormData();
@@ -201,6 +209,12 @@ function App() {
             {(step === 3 || step === 4) && text && (
               <>
                 {step === 3 && <GeneratedText text={text} />}
+                {step === 4 && recordedAudioUrl && (
+                  <AudioRecorder
+                    playbackOnly
+                    playbackUrl={recordedAudioUrl}
+                  />
+                )}
                 {step === 4 && feedback && (
                   <Feedback
                     analysis={feedback.analysis}
