@@ -55,7 +55,7 @@ function App() {
   };
 
   const handleTextGeneration = async () => {
-    if (!selectedTheme || selectedWords.length === 0) setStep(3);
+    if (!selectedTheme || selectedWords.length === 0) return;
 
     const success = await generate({
       themeId: selectedTheme.id,
