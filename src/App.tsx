@@ -10,22 +10,22 @@ import { useTextGeneration } from "./features/generation/hooks/useTextGeneration
 import type { Theme, Word } from "./constants/lexicon.ts";
 import { GeneratedText } from "./features/generation/components/GeneratedText.tsx";
 import { AudioRecorder } from "./features/audio-recorder/components/AudioRecorder.tsx";
-import { generateFeedback } from "./features/feedback/api/generateFeedback.ts";
 import { Feedback } from "./features/feedback/components/Feedback.tsx";
-import type { GenerateFeedbackResponse } from "./features/feedback/types/generation.types.ts";
+import { useFeedbackGeneration } from "./features/feedback/hooks/useFeedbackGeneration";
 
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
-  const [feedback, setFeedback] = useState<GenerateFeedbackResponse | null>(
-    null,
-  );
-  const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
-  const [feedbackError, setFeedbackError] = useState<string | null>(null);
   const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
 
   const { generate, text, isLoading, error } = useTextGeneration();
+  const {
+    feedback,
+    isLoading: isFeedbackLoading,
+    error: feedbackError,
+    submitAudio,
+  } = useFeedbackGeneration();
 
   useEffect(() => {
     return () => {
@@ -68,27 +68,11 @@ function App() {
   };
 
   const handleAudioValidated = async (audioUrl: string) => {
+    if (!text) return;
+
     setRecordedAudioUrl(audioUrl);
-    const audioBlob = await fetch(audioUrl).then((res) => res.blob());
-
-    const formData = new FormData();
-    formData.append("expected_text", text);
-    formData.append("audio", audioBlob, "recording.webm");
-
-    setIsFeedbackLoading(true);
-    setFeedbackError(null);
-
-    try {
-      const response = await generateFeedback(formData);
-      setFeedback(response);
-      setStep(4);
-    } catch {
-      setFeedbackError(
-        "Une erreur est survenue lors de l'analyse de votre enregistrement.",
-      );
-    } finally {
-      setIsFeedbackLoading(false);
-    }
+    const success = await submitAudio(audioUrl, text);
+    if (success) setStep(4);
   };
 
   const STEP_CONTENT = {
