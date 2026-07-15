@@ -11,11 +11,18 @@ import type { Theme, Word } from "./constants/lexicon.ts";
 import { GeneratedText } from "./features/generation/components/GeneratedText.tsx";
 import { AudioRecorder } from "./features/audio-recorder/components/AudioRecorder.tsx";
 import { generateFeedback } from "./features/feedback/api/generateFeedback.ts";
+import { Feedback } from "./features/feedback/components/Feedback.tsx";
+import type { GenerateFeedbackResponse } from "./features/feedback/types/generation.types.ts";
 
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
+  const [feedback, setFeedback] = useState<GenerateFeedbackResponse | null>(
+    null,
+  );
+  const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
 
   const { generate, text, isLoading, error } = useTextGeneration();
 
@@ -60,8 +67,20 @@ function App() {
     formData.append("expected_text", text);
     formData.append("audio", audioBlob, "recording.webm");
 
-    await generateFeedback(formData);
-    setStep(4);
+    setIsFeedbackLoading(true);
+    setFeedbackError(null);
+
+    try {
+      const response = await generateFeedback(formData);
+      setFeedback(response);
+      setStep(4);
+    } catch {
+      setFeedbackError(
+        "Une erreur est survenue lors de l'analyse de votre enregistrement.",
+      );
+    } finally {
+      setIsFeedbackLoading(false);
+    }
   };
 
   const STEP_CONTENT = {
@@ -179,10 +198,29 @@ function App() {
                 )}
               </div>
             )}
-            {step === 3 && text && (
+            {(step === 3 || step === 4) && text && (
               <>
-                <GeneratedText text={text} />
-                <AudioRecorder onAudioValidated={handleAudioValidated} />
+                {step === 3 && <GeneratedText text={text} />}
+                {step === 4 && feedback && (
+                  <Feedback
+                    analysis={feedback.analysis}
+                    transcribedText={feedback.transcribed_text}
+                  />
+                )}
+                {step === 3 && (
+                  <AudioRecorder onAudioValidated={handleAudioValidated} />
+                )}
+                {isFeedbackLoading && (
+                  <p style={{ marginTop: "32px" }}>Analyse en cours...</p>
+                )}
+                {feedbackError && (
+                  <div
+                    className="error-message"
+                    style={{ color: "red", marginTop: "32px" }}
+                  >
+                    {feedbackError}
+                  </div>
+                )}
               </>
             )}
           </div>

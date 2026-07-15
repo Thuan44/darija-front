@@ -1,8 +1,29 @@
+type FeedbackError = {
+  mot: string;
+  type: string;
+  detail: string;
+};
+
+type FeedbackAnalysis = {
+  score_global: number;
+  fluidite: number;
+  prononciation: number;
+  fidelite_texte: number;
+  points_forts: string[];
+  erreurs: FeedbackError[];
+  conseils: string[];
+};
+
 type GenerateFeedbackRequest = FormData;
 
 type GenerateFeedbackResponse = {
-  analysis: object
+  analysis: FeedbackAnalysis;
   transcribed_text: string;
 };
 
-export type { GenerateFeedbackRequest, GenerateFeedbackResponse };
+export type {
+  FeedbackAnalysis,
+  FeedbackError,
+  GenerateFeedbackRequest,
+  GenerateFeedbackResponse,
+};
