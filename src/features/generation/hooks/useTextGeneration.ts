@@ -23,5 +23,11 @@ export function useTextGeneration() {
     }
   }, []);
 
-  return { text, isLoading, error, generate, reset: () => setText(null) };
+  const reset = useCallback(() => {
+    setText(null);
+    setError(null);
+    setIsLoading(false);
+  }, []);
+
+  return { text, isLoading, error, generate, reset };
 }

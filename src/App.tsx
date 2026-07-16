@@ -19,12 +19,13 @@ function App() {
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
   const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
 
-  const { generate, text, isLoading, error } = useTextGeneration();
+  const { generate, text, isLoading, error, reset } = useTextGeneration();
   const {
     feedback,
     isLoading: isFeedbackLoading,
     error: feedbackError,
     submitAudio,
+    reset: resetFeedback,
   } = useFeedbackGeneration();
 
   useEffect(() => {
@@ -73,6 +74,17 @@ function App() {
     setRecordedAudioUrl(audioUrl);
     const success = await submitAudio(audioUrl, text);
     if (success) setStep(4);
+  };
+
+  const handleRestart = () => {
+    if (recordedAudioUrl) URL.revokeObjectURL(recordedAudioUrl);
+
+    reset();
+    resetFeedback();
+    setStep(0);
+    setSelectedTheme(null);
+    setSelectedWords([]);
+    setRecordedAudioUrl(null);
   };
 
   const STEP_CONTENT = {
@@ -217,6 +229,17 @@ function App() {
                     style={{ color: "red", marginTop: "32px" }}
                   >
                     {feedbackError}
+                  </div>
+                )}
+                {(step === 4 || (step === 3 && feedbackError)) && (
+                  <div className="generated-text-actions">
+                    <button
+                      type="button"
+                      className="btn btn-accent"
+                      onClick={handleRestart}
+                    >
+                      Recommencer
+                    </button>
                   </div>
                 )}
               </>

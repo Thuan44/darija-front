@@ -45,6 +45,7 @@ export function useFeedbackGeneration() {
     reset: () => {
       setFeedback(null);
       setError(null);
+      setIsLoading(false);
     },
   };
 }
