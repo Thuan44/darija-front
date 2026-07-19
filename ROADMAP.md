@@ -89,11 +89,11 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
 - [x] **P0-5 — Documentation env**
   - [x] Créer `.env.example` avec `VITE_API_URL=http://localhost:8000`
 
-- [ ] **P0-6 — Erreurs utilisateur**
-  - `mapApiError.ts` : 4xx → « Requête invalide », 5xx → serveur indisponible, réseau → connexion, fallback générique
-  - `ErrorMessage.tsx` réutilisable avec prop `onRetry?`
-  - Remplacer les blocs inline `style={{ color: "red" }}` dans `App.tsx` et `AudioRecorder`
-  - Bouton « Réessayer l'analyse » sur échec feedback (réutilise `recordedAudioUrl`)
+- [x] **P0-6 — Erreurs utilisateur**
+  - [x] `mapApiError.ts` : 4xx → « Requête invalide », 5xx → serveur indisponible, réseau → connexion, fallback générique
+  - [x] `ErrorMessage.tsx` réutilisable avec prop `onRetry?`
+  - [x] Remplacer les blocs inline `style={{ color: "red" }}` dans `App.tsx` et `AudioRecorder`
+  - [x] Bouton « Réessayer l'analyse » sur échec feedback (réutilise `recordedAudioUrl`)
 
 
 
@@ -104,7 +104,7 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
 - [ ] Enregistrement audio fonctionne sur Chrome et Safari (test manuel iOS / macOS)
 - [x] Sans `VITE_API_URL`, l'app affiche un écran explicatif (pas d'écran blanc)
 - [x] Une erreur de rendu React affiche l'Error Boundary (pas d'écran blanc)
-- [ ] Erreurs API en français avec possibilité de réessayer (génération + feedback)
+- [x] Erreurs API en français avec possibilité de réessayer (génération + feedback)
 - [x] `.env.example` documente la variable requise
 - [ ] `npm run lint` et `npm run build` passent sans régression
 

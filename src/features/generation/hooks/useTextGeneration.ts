@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { mapApiError } from "../../../api/mapApiError";
 import type { GenerateTextRequest } from "../types/generation.types";
 import { generateText } from "../api/generateText";
 
@@ -14,10 +15,10 @@ export function useTextGeneration() {
     try {
       const { text } = await generateText(payload);
       setText(text);
-      return true
+      return true;
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur inconnue");
-      return false
+      setError(mapApiError(e));
+      return false;
     } finally {
       setIsLoading(false);
     }

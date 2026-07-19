@@ -12,12 +12,14 @@ import { GeneratedText } from "./features/generation/components/GeneratedText.ts
 import { AudioRecorder } from "./features/audio-recorder/components/AudioRecorder.tsx";
 import { Feedback } from "./features/feedback/components/Feedback.tsx";
 import { useFeedbackGeneration } from "./features/feedback/hooks/useFeedbackGeneration";
+import { ErrorMessage } from "./components/ErrorMessage";
 
 function App() {
   const [step, setStep] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
   const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
+  const [recordedMimeType, setRecordedMimeType] = useState<string | null>(null);
 
   const { generate, text, isLoading, error, reset } = useTextGeneration();
   const {
@@ -72,7 +74,15 @@ function App() {
     if (!text) return;
 
     setRecordedAudioUrl(audioUrl);
+    setRecordedMimeType(mimeType);
     const success = await submitAudio(audioUrl, text, mimeType);
+    if (success) setStep(4);
+  };
+
+  const handleRetryFeedback = async () => {
+    if (!recordedAudioUrl || !text || !recordedMimeType) return;
+
+    const success = await submitAudio(recordedAudioUrl, text, recordedMimeType);
     if (success) setStep(4);
   };
 
@@ -85,6 +95,7 @@ function App() {
     setSelectedTheme(null);
     setSelectedWords([]);
     setRecordedAudioUrl(null);
+    setRecordedMimeType(null);
   };
 
   const STEP_CONTENT = {
@@ -184,12 +195,10 @@ function App() {
                   ))}
                 </ul>
                 {error && (
-                  <div
-                    className="error-message"
-                    style={{ color: "red", marginTop: "32px" }}
-                  >
-                    {error}
-                  </div>
+                  <ErrorMessage
+                    message={error}
+                    onRetry={handleTextGeneration}
+                  />
                 )}
                 {selectedWords.length > 0 && (
                   <button
@@ -224,12 +233,11 @@ function App() {
                   <p style={{ marginTop: "32px" }}>Analyse en cours...</p>
                 )}
                 {feedbackError && (
-                  <div
-                    className="error-message"
-                    style={{ color: "red", marginTop: "32px" }}
-                  >
-                    {feedbackError}
-                  </div>
+                  <ErrorMessage
+                    message={feedbackError}
+                    onRetry={handleRetryFeedback}
+                    retryLabel="Réessayer l'analyse"
+                  />
                 )}
                 {(step === 4 || (step === 3 && feedbackError)) && (
                   <div className="generated-text-actions">

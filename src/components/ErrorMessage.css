@@ -1,0 +1,13 @@
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.error-message-text {
+  color: var(--score-low);
+  line-height: 1.5;
+  max-width: 28rem;
+}

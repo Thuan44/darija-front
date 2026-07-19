@@ -1,9 +1,7 @@
 import { useState, useCallback } from "react";
+import { mapApiError } from "../../../api/mapApiError";
 import { generateFeedback } from "../api/generateFeedback";
 import type { GenerateFeedbackResponse } from "../types/generation.types";
-
-const FEEDBACK_ERROR_MESSAGE =
-  "Une erreur est survenue lors de l'analyse de votre enregistrement.";
 
 const EXTENSION_BY_MIME: Record<string, string> = {
   "audio/webm": "webm",
@@ -39,8 +37,8 @@ export function useFeedbackGeneration() {
         const response = await generateFeedback(formData);
         setFeedback(response);
         return true;
-      } catch {
-        setError(FEEDBACK_ERROR_MESSAGE);
+      } catch (e) {
+        setError(mapApiError(e));
         return false;
       } finally {
         setIsLoading(false);

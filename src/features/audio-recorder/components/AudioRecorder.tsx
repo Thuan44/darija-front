@@ -1,5 +1,6 @@
 import { Mic, Square } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ErrorMessage } from "../../../components/ErrorMessage";
 import { getSupportedMimeType } from "../utils/getSupportedMimeType";
 
 type AudioRecorderProps = {
@@ -7,6 +8,9 @@ type AudioRecorderProps = {
   playbackOnly?: boolean;
   playbackUrl?: string | null;
 };
+
+const MICROPHONE_ERROR_MESSAGE =
+  "Une erreur est survenue lors de l'accès au microphone. Veuillez vérifier les permissions de votre navigateur.";
 
 export function AudioRecorder({
   onAudioValidated,
@@ -43,6 +47,7 @@ export function AudioRecorder({
   const startRecording = async () => {
     audioChunksRef.current = [];
     setAudioUrl(null);
+    setError(false);
 
     try {
       // 1. Ask access to microphone
@@ -113,13 +118,10 @@ export function AudioRecorder({
   return (
     <div className="generated-text-actions-wrapper">
       {error && (
-        <div
-          className="error-message"
-          style={{ color: "red", marginTop: "32px" }}
-        >
-          Une erreur est survenue lors de l'accès au microphone. Veuillez
-          vérifier les permissions de votre navigateur.
-        </div>
+        <ErrorMessage
+          message={MICROPHONE_ERROR_MESSAGE}
+          onRetry={startRecording}
+        />
       )}
 
       <div className="generated-text-actions">
