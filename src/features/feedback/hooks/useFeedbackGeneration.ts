@@ -18,7 +18,16 @@ export function useFeedbackGeneration() {
 
       const formData = new FormData();
       formData.append("expected_text", expectedText);
-      formData.append("audio", audioBlob, "recording.webm");
+      // Derive file extension from audioBlob.type
+      const mimeType = audioBlob.type; // e.g., "audio/webm"
+      let extension = "webm";
+      if (mimeType) {
+        const match = mimeType.match(/audio\/([a-zA-Z0-9]+)/);
+        if (match && match[1]) {
+          extension = match[1];
+        }
+      }
+      formData.append("audio", audioBlob, `recording.${extension}`);
 
       setIsLoading(true);
       setError(null);
