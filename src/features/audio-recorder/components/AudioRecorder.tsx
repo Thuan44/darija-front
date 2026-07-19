@@ -1,5 +1,6 @@
 import { Mic, Square } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { getSupportedMimeType } from "../utils/getSupportedMimeType";
 
 type AudioRecorderProps = {
   onAudioValidated?: (audioUrl: string) => void;
@@ -18,6 +19,7 @@ export function AudioRecorder({
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const mimeTypeRef = useRef<string | undefined>(undefined);
   const urlTransferredRef = useRef(false);
 
   // Cleanup microphone on unmouting
@@ -46,13 +48,12 @@ export function AudioRecorder({
       // 1. Ask access to microphone
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // 2. Init MediaRecorder
-      // Note: audio/webm is natively supported by Chrome and Firefox
-      const options = {
-        mimeType: "audio/webm",
-      };
-
-      const mediaRecorder = new MediaRecorder(stream, options);
+      // 2. Init MediaRecorder with the best supported MIME type
+      const mimeType = getSupportedMimeType();
+      mimeTypeRef.current = mimeType;
+      const mediaRecorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
 
       mediaRecorderRef.current = mediaRecorder;
 
@@ -65,8 +66,10 @@ export function AudioRecorder({
 
       // 4. Handle end of recording
       mediaRecorder.onstop = () => {
+        const blobType =
+          mimeTypeRef.current ?? (mediaRecorder.mimeType || "audio/webm");
         const audioBlob = new Blob(audioChunksRef.current, {
-          type: "audio/webm",
+          type: blobType,
         });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
@@ -79,7 +82,6 @@ export function AudioRecorder({
     } catch (e) {
       setError(true);
       console.error("Erreur lors de l'accès au microphone :", e);
-      alert("Impossible d'accéder au microphone.");
     }
   };
 

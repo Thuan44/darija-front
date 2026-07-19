@@ -70,12 +70,12 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
   - Return early si `!selectedTheme || selectedWords.length === 0`
   - Impossible d'appeler `generate()` avec un thème null
 
-- [ ] **P0-2 — Reset session**
+- [x] **P0-2 — Reset session**
   - Étendre `useTextGeneration.reset()` pour remettre `text`, `error` et `isLoading`
   - `handleRestart()` dans `App.tsx` : révoque `recordedAudioUrl`, reset `step / theme / words / audio`, appelle `reset()` des deux hooks
   - Bouton « Recommencer » à l'étape 4 (et à l'étape 3 si feedback échoué)
 
-- [ ] **P0-3 — Safari / iOS audio**
+- [x] **P0-3 — Safari / iOS audio**
   - Utilitaire `getSupportedMimeType()` testant `MediaRecorder.isTypeSupported()` dans l'ordre : `audio/webm;codecs=opus` → `audio/webm` → `audio/mp4` → `audio/aac` → fallback navigateur
   - Callback `onAudioValidated(url, mimeType)` au lieu de `(url)` seul
   - Extension dynamique du fichier uploadé (`recording.webm` / `.mp4` / `.m4a`)
