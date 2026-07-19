@@ -86,9 +86,8 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
   - Gate dans `main.tsx` avant rendu de `App`
   - `ErrorBoundary.tsx` : message FR + bouton « Recharger la page »
 
-- [ ] **P0-5 — Documentation env**
+- [x] **P0-5 — Documentation env**
   - [x] Créer `.env.example` avec `VITE_API_URL=http://localhost:8000`
-  - README : prérequis, `cp .env.example .env`, `npm install`, `npm run dev`
 
 - [ ] **P0-6 — Erreurs utilisateur**
   - `mapApiError.ts` : 4xx → « Requête invalide », 5xx → serveur indisponible, réseau → connexion, fallback générique
