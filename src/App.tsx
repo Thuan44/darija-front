@@ -68,11 +68,11 @@ function App() {
     }
   };
 
-  const handleAudioValidated = async (audioUrl: string) => {
+  const handleAudioValidated = async (audioUrl: string, mimeType: string) => {
     if (!text) return;
 
     setRecordedAudioUrl(audioUrl);
-    const success = await submitAudio(audioUrl, text);
+    const success = await submitAudio(audioUrl, text, mimeType);
     if (success) setStep(4);
   };
 

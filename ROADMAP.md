@@ -76,7 +76,7 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
   - Bouton « Recommencer » à l'étape 4 (et à l'étape 3 si feedback échoué)
 
 - [x] **P0-3 — Safari / iOS audio**
-  - Utilitaire `getSupportedMimeType()` testant `MediaRecorder.isTypeSupported()` dans l'ordre : `audio/webm;codecs=opus` → `audio/webm` → `audio/mp4` → `audio/aac` → fallback navigateur
+  - Utilitaire `getSupportedMimeType()` testant `MediaRecorder.isTypeSupported()` dans l'ordre : `audio/webm;codecs=opus` → `audio/webm` → `audio/mp4` → `audio/m4a` → fallback navigateur
   - Callback `onAudioValidated(url, mimeType)` au lieu de `(url)` seul
   - Extension dynamique du fichier uploadé (`recording.webm` / `.mp4` / `.m4a`)
   - Supprimer `alert()` dans `AudioRecorder` (UI inline existante)

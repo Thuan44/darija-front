@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getSupportedMimeType } from "../utils/getSupportedMimeType";
 
 type AudioRecorderProps = {
-  onAudioValidated?: (audioUrl: string) => void;
+  onAudioValidated?: (audioUrl: string, mimeType: string) => void;
   playbackOnly?: boolean;
   playbackUrl?: string | null;
 };
@@ -95,7 +95,7 @@ export function AudioRecorder({
   const handleAudioValidation = () => {
     if (!audioUrl) return;
     urlTransferredRef.current = true;
-    onAudioValidated?.(audioUrl);
+    onAudioValidated?.(audioUrl, mimeTypeRef.current ?? "audio/webm");
     setAudioUrl(null);
   };
 

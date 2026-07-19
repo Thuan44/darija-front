@@ -5,6 +5,17 @@ import type { GenerateFeedbackResponse } from "../types/generation.types";
 const FEEDBACK_ERROR_MESSAGE =
   "Une erreur est survenue lors de l'analyse de votre enregistrement.";
 
+const EXTENSION_BY_MIME: Record<string, string> = {
+  "audio/webm": "webm",
+  "audio/mp4": "mp4",
+  "audio/aac": "m4a",
+};
+
+function getExtensionFromMimeType(mimeType: string): string {
+  const baseMime = mimeType.split(";")[0]?.trim() ?? "";
+  return EXTENSION_BY_MIME[baseMime] ?? "webm";
+}
+
 export function useFeedbackGeneration() {
   const [feedback, setFeedback] = useState<GenerateFeedbackResponse | null>(
     null,
@@ -13,20 +24,12 @@ export function useFeedbackGeneration() {
   const [error, setError] = useState<string | null>(null);
 
   const submitAudio = useCallback(
-    async (audioUrl: string, expectedText: string) => {
+    async (audioUrl: string, expectedText: string, mimeType: string) => {
       const audioBlob = await fetch(audioUrl).then((res) => res.blob());
 
       const formData = new FormData();
       formData.append("expected_text", expectedText);
-      // Derive file extension from audioBlob.type
-      const mimeType = audioBlob.type; // e.g., "audio/webm"
-      let extension = "webm";
-      if (mimeType) {
-        const match = mimeType.match(/audio\/([a-zA-Z0-9]+)/);
-        if (match && match[1]) {
-          extension = match[1];
-        }
-      }
+      const extension = getExtensionFromMimeType(mimeType);
       formData.append("audio", audioBlob, `recording.${extension}`);
 
       setIsLoading(true);
