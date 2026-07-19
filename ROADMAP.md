@@ -57,7 +57,7 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
 | P0-1 | Guard génération de texte                    | `src/App.tsx`                                                              | **Fait** |
 | P0-2 | Reset session + bouton « Recommencer »       | `src/App.tsx`, `useTextGeneration.ts`, `useFeedbackGeneration.ts`          | À faire  |
 | P0-3 | Audio multi-navigateur (Safari / iOS)        | `getSupportedMimeType.ts`, `AudioRecorder.tsx`, `useFeedbackGeneration.ts` | À faire  |
-| P0-4 | Error Boundary + écran config `VITE_API_URL` | `ErrorBoundary.tsx`, `ConfigError.tsx`, `src/main.tsx`                     | À faire  |
+| P0-4 | Error Boundary + écran config `VITE_API_URL` | `ErrorBoundary.tsx`, `ConfigError.tsx`, `src/main.tsx`                     | **Fait** |
 | P0-5 | `.env.example` + README setup                | `.env.example`, `README.md`                                                | À faire  |
 | P0-6 | Erreurs FR + bouton « Réessayer »            | `mapApiError.ts`, `ErrorMessage.tsx`, hooks, `App.css`                     | À faire  |
 
@@ -81,13 +81,13 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
   - Extension dynamique du fichier uploadé (`recording.webm` / `.mp4` / `.m4a`)
   - Supprimer `alert()` dans `AudioRecorder` (UI inline existante)
 
-- [ ] **P0-4 — Résilience au démarrage**
+- [x] **P0-4 — Résilience au démarrage**
   - `ConfigError.tsx` : écran FR si `VITE_API_URL` absente, avec indication de copier `.env.example`
   - Gate dans `main.tsx` avant rendu de `App`
   - `ErrorBoundary.tsx` : message FR + bouton « Recharger la page »
 
 - [ ] **P0-5 — Documentation env**
-  - Créer `.env.example` avec `VITE_API_URL=http://localhost:8000`
+  - [x] Créer `.env.example` avec `VITE_API_URL=http://localhost:8000`
   - README : prérequis, `cp .env.example .env`, `npm install`, `npm run dev`
 
 - [ ] **P0-6 — Erreurs utilisateur**
@@ -103,10 +103,10 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
 - [ ] Impossible d'atteindre l'étape 3 sans texte généré avec succès
 - [ ] « Recommencer » ramène à l'étape 0 avec état entièrement réinitialisé
 - [ ] Enregistrement audio fonctionne sur Chrome et Safari (test manuel iOS / macOS)
-- [ ] Sans `VITE_API_URL`, l'app affiche un écran explicatif (pas d'écran blanc)
-- [ ] Une erreur de rendu React affiche l'Error Boundary (pas d'écran blanc)
+- [x] Sans `VITE_API_URL`, l'app affiche un écran explicatif (pas d'écran blanc)
+- [x] Une erreur de rendu React affiche l'Error Boundary (pas d'écran blanc)
 - [ ] Erreurs API en français avec possibilité de réessayer (génération + feedback)
-- [ ] `.env.example` documente la variable requise
+- [x] `.env.example` documente la variable requise
 - [ ] `npm run lint` et `npm run build` passent sans régression
 
 ---

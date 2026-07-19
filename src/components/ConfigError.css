@@ -1,0 +1,38 @@
+.config-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.config-error h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.config-error p {
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.config-error-steps {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style-position: inside;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text-h);
+  line-height: 1.5;
+}
+
+.config-error-steps code {
+  margin-top: 6px;
+}
