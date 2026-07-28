@@ -16,7 +16,6 @@ lint:
     - npm run lint
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 build:
   stage: quality
@@ -26,5 +25,4 @@ build:
     VITE_API_URL: "$VITE_API_URL"
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
