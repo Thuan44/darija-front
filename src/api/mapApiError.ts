@@ -27,6 +27,9 @@ export function mapApiError(error: unknown): string {
     if (error.status === 404) {
       return "La ressource demandée est introuvable.";
     }
+    if (error.status === 429) {
+      return "Quota journalier atteint. Veuillez réessayer plus tard.";
+    }
     if (error.status >= 400 && error.status < 500) {
       return "Requête invalide. Veuillez vérifier les données saisies.";
     }
