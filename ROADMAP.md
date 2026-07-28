@@ -99,14 +99,14 @@ Minimum requis pour une mise en prod fiable. Effort estimé : **1–2 jours**.
 
 ### Critères d'acceptation P0
 
-- [ ] Impossible d'atteindre l'étape 3 sans texte généré avec succès
-- [ ] « Recommencer » ramène à l'étape 0 avec état entièrement réinitialisé
-- [ ] Enregistrement audio fonctionne sur Chrome et Safari (test manuel iOS / macOS)
+- [x] Impossible d'atteindre l'étape 3 sans texte généré avec succès
+- [x] « Recommencer » ramène à l'étape 0 avec état entièrement réinitialisé
+- [x] Enregistrement audio fonctionne sur Chrome et Safari (test manuel iOS / macOS)
 - [x] Sans `VITE_API_URL`, l'app affiche un écran explicatif (pas d'écran blanc)
 - [x] Une erreur de rendu React affiche l'Error Boundary (pas d'écran blanc)
 - [x] Erreurs API en français avec possibilité de réessayer (génération + feedback)
 - [x] `.env.example` documente la variable requise
-- [ ] `npm run lint` et `npm run build` passent sans régression
+- [x] `npm run lint` et `npm run build` passent sans régression
 
 ---
 
