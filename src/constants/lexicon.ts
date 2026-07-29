@@ -19,7 +19,7 @@ export const THEMES: Record<string, Theme> = {
   FOOD: {
     id: "food",
     label: "Nourriture",
-    icon: "ustensils",
+    icon: "utensils",
   },
   TRIP: {
     id: "trip",
