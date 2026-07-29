@@ -99,6 +99,17 @@
     align-items: center;
     margin: 32px auto;
     max-width: 600px;
+    gap: 12px;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      width: 100%;
+      max-width: 320px;
+
+      .btn {
+        width: 100%;
+      }
+    }
   }
 
   .generate-button {
@@ -388,6 +399,13 @@
     gap: 12px;
     max-width: 1200px;
     margin: 16px auto 0;
+
+    @media (max-width: 640px) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
   }
 
   @media (max-width: 1024px) {

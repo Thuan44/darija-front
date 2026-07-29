@@ -96,3 +96,42 @@
   line-height: 1.2;
   color: var(--text);
 }
+
+@media (max-width: 1024px) {
+  .word-selector {
+    width: 100%;
+  }
+
+  .word-selector__label {
+    min-width: 0;
+    width: 100%;
+    gap: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .word-selector__check {
+    width: 22px;
+    height: 22px;
+  }
+
+  .word-selector__check svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .word-selector__darija {
+    font-size: 14px;
+  }
+
+  .word-selector__translation {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .word-selector {
+    width: 240px;
+    max-width: none;
+  }
+}
