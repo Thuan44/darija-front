@@ -1,0 +1,137 @@
+.word-selector {
+  position: relative;
+}
+
+.word-selector__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.word-selector__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 140px;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--social-bg);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.word-selector__label:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+.word-selector__input:focus-visible + .word-selector__label {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.word-selector__input:checked + .word-selector__label {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  box-shadow: var(--shadow);
+}
+
+.word-selector__check {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: transparent;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.word-selector__label:hover .word-selector__check {
+  border-color: var(--accent-border);
+}
+
+.word-selector__input:checked + .word-selector__label .word-selector__check {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  transform: scale(1.05);
+}
+
+.word-selector__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.word-selector__darija {
+  color: var(--text-h);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.word-selector__translation {
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+@media (max-width: 1024px) {
+  .word-selector {
+    width: 100%;
+  }
+
+  .word-selector__label {
+    min-width: 0;
+    width: 100%;
+    gap: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .word-selector__check {
+    width: 22px;
+    height: 22px;
+  }
+
+  .word-selector__check svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .word-selector__darija {
+    font-size: 14px;
+  }
+
+  .word-selector__translation {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .word-selector {
+    width: 240px;
+    max-width: none;
+  }
+}

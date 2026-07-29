@@ -1,0 +1,141 @@
+.stepper {
+  margin: 0 auto 28px;
+  max-width: 520px;
+}
+
+.stepper-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.stepper-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.stepper-item:last-child {
+  flex: 0 0 auto;
+}
+
+.stepper-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: default;
+  min-width: 56px;
+}
+
+.stepper-button.is-clickable {
+  cursor: pointer;
+}
+
+.stepper-button.is-clickable:hover .stepper-marker {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.stepper-button:focus-visible {
+  outline: none;
+}
+
+.stepper-button:focus-visible .stepper-marker {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.stepper-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.stepper-button.is-current .stepper-marker {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.stepper-button.is-completed .stepper-marker {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.stepper-label {
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.stepper-button.is-current .stepper-label {
+  color: var(--text-h);
+  font-weight: 500;
+}
+
+.stepper-button.is-completed .stepper-label {
+  color: var(--text-h);
+}
+
+.stepper-connector {
+  flex: 1;
+  height: 2px;
+  margin: 0 8px;
+  margin-bottom: 22px;
+  background: var(--border);
+  align-self: flex-start;
+  margin-top: 15px;
+  transition: background 0.2s ease;
+}
+
+.stepper-connector.is-completed {
+  background: var(--accent-border);
+}
+
+@media (max-width: 1024px) {
+  .stepper {
+    margin-bottom: 20px;
+  }
+
+  .stepper-marker {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .stepper-label {
+    font-size: 12px;
+  }
+
+  .stepper-connector {
+    margin-inline: 4px;
+    margin-top: 13px;
+  }
+}

@@ -1,75 +1,61 @@
-# React + TypeScript + Vite
+# Coach Darija IA — Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application React pour s’entraîner à la lecture à voix haute en darija marocain : choisir un thème et des mots, générer un texte, l’enregistrer, puis recevoir un feedback IA.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript + Vite 8
+- Lucide React (icônes)
+- API backend via `VITE_API_URL`
 
-## React Compiler
+## Prérequis
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20+
+- Backend API démarré (voir repo backend)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+cp .env.example .env
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Configurer `.env` :
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```env
+VITE_API_URL=http://localhost:8000
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+L’URL est normalisée côté client (`…/api`). Sans `VITE_API_URL`, l’app affiche un écran de configuration.
 
+## Scripts
+
+| Commande         | Description              |
+| ---------------- | ------------------------ |
+| `npm run dev`    | Serveur de dev (HMR)     |
+| `npm run build`  | Build production         |
+| `npm run preview`| Prévisualiser le build   |
+| `npm run lint`   | ESLint                   |
+
+## Parcours
+
+1. **Thème** — maison, nourriture, voyage...
+2. **Mots** — sélection dans le lexique du thème  
+3. **Texte** — génération IA (`POST /api/generate-text`)  
+4. **Audio** — enregistrement micro (WebM / MP4 selon le navigateur)  
+5. **Feedback** — transcription + scores (`POST /api/transcribe`)
+
+## Structure
+
+```
+src/
+├── api/                  # client HTTP, config, erreurs
+├── components/           # ErrorBoundary, ConfigError, ErrorMessage
+├── constants/            # thèmes & lexique
+└── features/
+    ├── selection/        # thème & mots
+    ├── generation/       # texte généré
+    ├── audio-recorder/   # enregistrement
+    ├── feedback/         # scores & conseils
+    └── stepper/          # indicateur d’étapes
 ```

@@ -13,6 +13,7 @@ import { AudioRecorder } from "./features/audio-recorder/components/AudioRecorde
 import { Feedback } from "./features/feedback/components/Feedback.tsx";
 import { useFeedbackGeneration } from "./features/feedback/hooks/useFeedbackGeneration";
 import { ErrorMessage } from "./components/ErrorMessage";
+import { Stepper } from "./features/stepper/components/Stepper";
 
 function App() {
   const [step, setStep] = useState(0);
@@ -98,6 +99,40 @@ function App() {
     setRecordedMimeType(null);
   };
 
+  const clearRecording = () => {
+    if (recordedAudioUrl) URL.revokeObjectURL(recordedAudioUrl);
+    setRecordedAudioUrl(null);
+    setRecordedMimeType(null);
+    resetFeedback();
+  };
+
+  const handleStepClick = (targetStep: number) => {
+    if (targetStep >= step || targetStep < 1) return;
+
+    if (targetStep <= 2) {
+      clearRecording();
+      reset();
+    } else if (targetStep === 3) {
+      clearRecording();
+    }
+
+    setStep(targetStep);
+  };
+
+  const handleBack = () => {
+    if (step === 3) {
+      clearRecording();
+      reset();
+      setStep(2);
+      return;
+    }
+
+    if (step === 4) {
+      clearRecording();
+      setStep(3);
+    }
+  };
+
   const STEP_CONTENT = {
     1: {
       title: "Choisissez un thème",
@@ -140,10 +175,22 @@ function App() {
         )}
 
         <div>
-          <h1>Coach Darija IA</h1>
+          <h1>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setStep(0);
+              }}
+              style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+            >
+              Coach Darija IA
+            </a>
+          </h1>
           {step === 0 && (
             <p>Améliorez votre lecture et votre prononciation !</p>
           )}
+     
         </div>
         {step === 0 && (
           <button
@@ -159,6 +206,7 @@ function App() {
       {step > 0 && (
         <section id="themes">
           <div>
+            <Stepper currentStep={step} onStepClick={handleStepClick} />
             <h2>{content.title}</h2>
             <p>{content.description}</p>
             {step === 1 && (
@@ -239,8 +287,18 @@ function App() {
                     retryLabel="Réessayer l'analyse"
                   />
                 )}
-                {(step === 4 || (step === 3 && feedbackError)) && (
-                  <div className="generated-text-actions">
+                <div className="generated-text-actions">
+                  {step === 3 && (
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={handleBack}
+                    >
+                      Retour aux mots
+                    </button>
+                  )}
+             
+                  {(step === 4 || feedbackError) && (
                     <button
                       type="button"
                       className="btn btn-accent"
@@ -248,8 +306,8 @@ function App() {
                     >
                       Recommencer
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </>
             )}
           </div>
