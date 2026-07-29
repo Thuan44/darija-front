@@ -140,10 +140,22 @@ function App() {
         )}
 
         <div>
-          <h1>Coach Darija IA</h1>
+          <h1>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setStep(0);
+              }}
+              style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+            >
+              Coach Darija IA
+            </a>
+          </h1>
           {step === 0 && (
             <p>Améliorez votre lecture et votre prononciation !</p>
           )}
+     
         </div>
         {step === 0 && (
           <button
