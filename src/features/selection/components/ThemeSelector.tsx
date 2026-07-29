@@ -1,11 +1,13 @@
 import type { Theme } from "@/constants/lexicon.ts";
-import { Compass, Home, Utensils, type LucideIcon } from "lucide-react";
+import { Compass, Home, Utensils, PersonStanding, Dog, type LucideIcon } from "lucide-react";
 import "./ThemeSelector.css";
 
 const THEME_ICONS: Record<string, LucideIcon> = {
   home: Home,
   utensils: Utensils,
   compass: Compass,
+  person_standing: PersonStanding,
+  dog: Dog,
 };
 
 type ThemeSelectorProps = {
